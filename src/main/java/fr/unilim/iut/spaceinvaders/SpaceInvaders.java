@@ -1,8 +1,10 @@
 package fr.unilim.iut.spaceinvaders;
 
+import fr.unilim.iut.spaceinvaders.moteurjeu.Commande;
+import fr.unilim.iut.spaceinvaders.moteurjeu.Jeu;
 import fr.unilim.iut.spaceinvaders.utils.HorsEspaceJeuException;
 
-public class SpaceInvaders {
+public class SpaceInvaders implements Jeu{
 	 	private static final char MARQUE_VIDE = '.';
 		private static final char MARQUE_VAISSEAU = 'V';
 		int longueur;
@@ -14,6 +16,30 @@ public class SpaceInvaders {
 		   this.hauteur = hauteur;
 	   }
 
+	    @Override
+		public boolean etreFini() {
+			// le jeu n'est jamais fini
+			return false;
+		}
+	    
+	    @Override
+	    public void evoluer(Commande commande) {
+	    	if (commande.gauche)
+			{
+				this.vaisseau.seDeplacerVersLaGauche();;
+			}
+
+			if (commande.droite)
+			{
+				this.vaisseau.seDeplacerVersLaDroite();
+			}
+		}
+	    
+	    
+	    
+	    
+	    
+	    
 		public String recupererEspaceJeuDansChaineASCII() {
 			StringBuilder espaceDeJeu = new StringBuilder();
 			for (int y = 0; y < hauteur; y++) {
@@ -40,10 +66,19 @@ public class SpaceInvaders {
 		private boolean aUnVaisseauQuiOccupeLaPosition(int x, int y) {
 			return this.aUnVaisseau() && vaisseau.occupeLaPosition(x, y);
 		}
-		private boolean aUnVaisseau() {
+		public boolean aUnVaisseau() {
 			return vaisseau!=null;
 		}
-	    
+		public Vaisseau recupererVaisseau() {
+			return this.vaisseau;
+		}
+		
+		public void initialiserJeu() {
+		    Position positionVaisseau = new Position(this.longueur/2,this.hauteur-1);
+		    Dimension dimensionVaisseau = new Dimension(Constante.VAISSEAU_LONGUEUR, Constante.VAISSEAU_HAUTEUR);
+		    positionnerUnNouveauVaisseau(dimensionVaisseau, positionVaisseau);
+	    }
+		
 		public void positionnerUnNouveauVaisseau(Dimension dimension, Position position) {
 			
 			int x = position.abscisse();
