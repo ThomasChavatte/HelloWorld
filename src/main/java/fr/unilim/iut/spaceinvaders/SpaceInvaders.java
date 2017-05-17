@@ -26,12 +26,12 @@ public class SpaceInvaders implements Jeu{
 	    public void evoluer(Commande commande) {
 	    	if (commande.gauche)
 			{
-				this.vaisseau.seDeplacerVersLaGauche();;
+				deplacerVaisseauVersLaGauche();
 			}
 
 			if (commande.droite)
 			{
-				this.vaisseau.seDeplacerVersLaDroite();
+				deplacerVaisseauVersLaDroite();
 			}
 		}
 	    
