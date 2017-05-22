@@ -48,18 +48,22 @@ public abstract class Sprite {
 	public int abscisseLaPlusAGauche() {
 		return this.origine.abscisse();
 	}
-
-	public void seDeplacerVersLaDroite() {
-		this.origine.changerAbscisse(this.origine.abscisse() + vitesse);
+	
+	public void deplacerHorizontalementVers(Direction direction) {
+		if(direction.valeur()==-1 && this.origine.abscisse() >0){
+			this.origine.changerAbscisse((this.origine.abscisse() + direction.valeur()*vitesse));
+		}
+		if(direction.valeur()== 1 && this.origine.abscisse() < Constante.ESPACEJEU_LONGUEUR- this.dimension.longueur){
+			this.origine.changerAbscisse(this.origine.abscisse() + direction.valeur()*vitesse);
+		}
+		
 	}
-
-	public void seDeplacerVersLaGauche() {
-		this.origine.changerAbscisse(this.origine.abscisse() - vitesse);
-	}
-
 	public void positionner(int x, int y) {
 		this.origine.changerAbscisse(x);
 		this.origine.changerOrdonnee(y);
 	}
 
+	public void deplacerVerticalementVers(Direction direction) {
+		this.origine.changerOrdonnee(this.origine.ordonnee() + direction.valeur()*vitesse);
+	}
 }

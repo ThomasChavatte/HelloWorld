@@ -27,18 +27,24 @@ public class SpaceInvaders implements Jeu{
 	    public void evoluer(Commande commande) {
 	    	if (commande.gauche)
 			{
-				deplacerVaisseauVersLaGauche();
+	    		vaisseau.deplacerHorizontalementVers(Direction.GAUCHE);
 			}
 
 			if (commande.droite)
 			{
-				deplacerVaisseauVersLaDroite();
+				vaisseau.deplacerHorizontalementVers(Direction.DROITE);
 			}
 			if (commande.tir && !this.aUnMissile())
 		           tirerUnMissile(new Dimension(Constante.MISSILE_LONGUEUR, Constante.MISSILE_HAUTEUR),
 							Constante.MISSILE_VITESSE);
-		}
+			
+			if(this.aUnMissile()){
+	    		this.deplacerMissile();
+	    	}
+	    }
 	    
+	    	
+	    	
 	    
 	    
 	    
@@ -120,7 +126,7 @@ public class SpaceInvaders implements Jeu{
 		
 		public void deplacerVaisseauVersLaDroite() {
 			if (vaisseau.abscisseLaPlusADroite() < (longueur - 1)) {
-				vaisseau.seDeplacerVersLaDroite();
+				vaisseau.deplacerHorizontalementVers(Direction.DROITE);
 				if (!estDansEspaceJeu(vaisseau.abscisseLaPlusADroite(), vaisseau.ordonneeLaPlusHaute())) {
 					vaisseau.positionner(longueur - vaisseau.longueur(), vaisseau.ordonneeLaPlusHaute());
 				}
@@ -129,7 +135,7 @@ public class SpaceInvaders implements Jeu{
 		
 		public void deplacerVaisseauVersLaGauche() {
 			if (0 < vaisseau.abscisseLaPlusAGauche())
-				vaisseau.seDeplacerVersLaGauche();
+				vaisseau.deplacerHorizontalementVers(Direction.GAUCHE);
 			if (!estDansEspaceJeu(vaisseau.abscisseLaPlusAGauche(), vaisseau.ordonneeLaPlusHaute())) {
 				vaisseau.positionner(0, vaisseau.ordonneeLaPlusHaute());
 			}
@@ -146,6 +152,16 @@ public class SpaceInvaders implements Jeu{
 		public Missile recupererMissile() {
 			// TODO Auto-generated method stub
 			return this.missile;
+		}
+
+		public void deplacerMissile() {
+			
+			if(missile.ordonneeLaPlusBasse()>0){
+			missile.deplacerVerticalementVers(Direction.HAUT_ECRAN);
+			}
+			else{
+				this.missile=null;
+			}
 		}
 		
 

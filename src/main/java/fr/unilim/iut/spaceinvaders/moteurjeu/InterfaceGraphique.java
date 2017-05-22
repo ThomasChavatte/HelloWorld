@@ -34,6 +34,8 @@ public class InterfaceGraphique  {
 	{
 		//creation JFrame
 		JFrame f=new JFrame();
+		f.setSize(300,300);
+		f.setResizable(false);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		// creation panel
