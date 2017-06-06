@@ -49,15 +49,7 @@ public class SpaceInvaders implements Jeu{
 				this.deplacerEnvahisseur();
 			}
 	    }
-	    
-	    	
-	    	
-	    
-	    
-	    
-	    
-	    
-		
+	    			
 
 		public String recupererEspaceJeuDansChaineASCII() {
 			StringBuilder espaceDeJeu = new StringBuilder();
