@@ -97,7 +97,7 @@ public class Controleur implements KeyListener {
 
 	@Override
 	/**
-	 * ne fait rien
+	 * 
 	 */
 	public void keyTyped(KeyEvent e) {
 

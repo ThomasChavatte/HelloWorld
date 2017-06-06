@@ -5,6 +5,10 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
+import fr.unilim.iut.spaceinvaders.model.Envahisseur;
+import fr.unilim.iut.spaceinvaders.model.Missile;
+import fr.unilim.iut.spaceinvaders.model.SpaceInvaders;
+import fr.unilim.iut.spaceinvaders.model.Vaisseau;
 import fr.unilim.iut.spaceinvaders.moteurjeu.DessinJeu;
 import fr.unilim.iut.spaceinvaders.moteurjeu.Jeu;
 

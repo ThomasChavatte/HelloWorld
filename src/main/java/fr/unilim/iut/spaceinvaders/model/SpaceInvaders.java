@@ -1,5 +1,7 @@
-package fr.unilim.iut.spaceinvaders;
+package fr.unilim.iut.spaceinvaders.model;
 
+import fr.unilim.iut.spaceinvaders.DebordementEspaceJeuException;
+import fr.unilim.iut.spaceinvaders.model.Constante;
 import fr.unilim.iut.spaceinvaders.moteurjeu.Commande;
 import fr.unilim.iut.spaceinvaders.moteurjeu.Jeu;
 import fr.unilim.iut.spaceinvaders.utils.HorsEspaceJeuException;
@@ -7,8 +9,6 @@ import fr.unilim.iut.spaceinvaders.utils.MissileException;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import fr.unilim.iut.spaceinvaders.Constante;
 
 public class SpaceInvaders implements Jeu {
 	int longueur;
