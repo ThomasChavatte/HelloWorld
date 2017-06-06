@@ -313,6 +313,9 @@ import fr.unilim.iut.spaceinvaders.utils.MissileException;
 	       "...............\n" , spaceinvaders.recupererEspaceJeuDansChaineASCII()); 
 	   }
 	   
+	  
+	   
+	   
 	   @Test
 		public void test_UnNouveauEnvahisseurPositionneHorsEspaceJeu_DoitLeverUneException() {
 			
@@ -320,6 +323,7 @@ import fr.unilim.iut.spaceinvaders.utils.MissileException;
 				spaceinvaders.positionnerUnNouveauEnvahisseur(new Dimension(1,1),new Position(15,9), 1);
 				fail("Position trop à droite : devrait déclencher une exception HorsEspaceJeuException");
 			} catch (final HorsEspaceJeuException e) {
+				System.out.println("bbj");
 			}
 			
 			
@@ -585,5 +589,122 @@ import fr.unilim.iut.spaceinvaders.utils.MissileException;
 	       spaceinvaders.tirerUnMissile(new Dimension(1,1), 2);
 	       assertEquals(true,spaceinvaders.etreFini());
 	   }
+	   
+	   @Test
+	   public void test_TirerDeuxMissileTropPresLeDeuxiemeNapparaitPas() {
+	       spaceinvaders.positionnerUnNouveauVaisseau(new Dimension(7,2), new Position(5,9), 3);
+	      
+	       spaceinvaders.tirerUnMissile(new Dimension(1,1), 2);
+	       spaceinvaders.deplacerVaisseauVersLaDroite();
+	       spaceinvaders.tirerUnMissile(new Dimension(1,1), 2); // vaisseau trop près donc pas possible de retirer
+	       assertEquals("" + 
+			       "...............\n" + 
+			       "...............\n" +
+			       "...............\n" + 
+			       "...............\n" + 
+			       "...............\n" + 
+			       "...............\n" + 
+			       "...............\n" + 
+			       "........M......\n" + 
+			       "........VVVVVVV\n" + 
+			       "........VVVVVVV\n" , spaceinvaders.recupererEspaceJeuDansChaineASCII());
+	   }
+	   @Test
+	   public void test_TirerDeuxMissileEnMemeTempsSurPlateau() {
+	       spaceinvaders.positionnerUnNouveauVaisseau(new Dimension(7,2), new Position(5,9), 3);
+	      
+	       spaceinvaders.tirerUnMissile(new Dimension(1,1), 2);
+	       spaceinvaders.deplacerMissile();
+	       
+	       spaceinvaders.tirerUnMissile(new Dimension(1,1), 1); 
+	       assertEquals("" + 
+			       "...............\n" + 
+			       "...............\n" +
+			       "...............\n" + 
+			       "...............\n" + 
+			       "...............\n" + 
+			       "........M......\n" + 
+			       "...............\n" + 
+			       "........M......\n" + 
+			       ".....VVVVVVV...\n" + 
+			       ".....VVVVVVV...\n" , spaceinvaders.recupererEspaceJeuDansChaineASCII());
+	   }
+	   @Test
+	   public void test_DeplacerPlusieursMissileEnMemeTemps() {
+	       spaceinvaders.positionnerUnNouveauVaisseau(new Dimension(7,2), new Position(5,9), 3);
+	      
+	       spaceinvaders.tirerUnMissile(new Dimension(1,1), 2);
+	       spaceinvaders.deplacerMissile();
+	       spaceinvaders.tirerUnMissile(new Dimension(1,1), 1); 
+	       spaceinvaders.deplacerMissile();
+	       assertEquals("" + 
+			       "...............\n" + 
+			       "...............\n" +
+			       "...............\n" + 
+			       "........M......\n" + 
+			       "...............\n" + 
+			       "...............\n" + 
+			       "........M......\n" + 
+			       "...............\n" + 
+			       ".....VVVVVVV...\n" + 
+			       ".....VVVVVVV...\n" , spaceinvaders.recupererEspaceJeuDansChaineASCII());
+	   }
+	   
+	   @Test
+	   public void test_TirerPasPlusDeQuatreMissile() {
+	       spaceinvaders.positionnerUnNouveauVaisseau(new Dimension(7,2), new Position(5,9), 3);
+	      
+	       spaceinvaders.tirerUnMissile(new Dimension(1,1), 1);
+	       spaceinvaders.deplacerMissile();
+	       spaceinvaders.tirerUnMissile(new Dimension(1,1), 1); 
+	       spaceinvaders.deplacerMissile();
+	       spaceinvaders.tirerUnMissile(new Dimension(1,1), 1); 
+	       spaceinvaders.deplacerMissile();
+	       spaceinvaders.tirerUnMissile(new Dimension(1,1), 1); 
+	       spaceinvaders.deplacerMissile();
+	       spaceinvaders.tirerUnMissile(new Dimension(1,1), 1); //celui la n'apparait pas il devrait être collé au vaisseau mais le nombre de missile max sur le plateau est 4
+	       
+	       assertEquals("" + 
+			       "...............\n" + 
+			       "...............\n" +
+			       "...............\n" + 
+			       "........M......\n" + 
+			       "........M......\n" + 
+			       "........M......\n" + 
+			       "........M......\n" + 
+			       "...............\n" + 
+			       ".....VVVVVVV...\n" + 
+			       ".....VVVVVVV...\n" , spaceinvaders.recupererEspaceJeuDansChaineASCII());
+	   }
+	   
+	   @Test
+	   public void test_TousLesMissilesDisparaissentQuandPartieFini() {
+	       spaceinvaders.positionnerUnNouveauVaisseau(new Dimension(7,2), new Position(5,9), 3);
+	       spaceinvaders.positionnerUnNouveauEnvahisseur(new Dimension(3,2),new Position(7,3),3);
+	       spaceinvaders.tirerUnMissile(new Dimension(1,1), 1);
+	       spaceinvaders.deplacerMissile();
+	       spaceinvaders.tirerUnMissile(new Dimension(1,1), 1); 
+	       spaceinvaders.deplacerMissile();
+	       spaceinvaders.tirerUnMissile(new Dimension(1,1), 1); 
+	       spaceinvaders.deplacerMissile();
+	       spaceinvaders.tirerUnMissile(new Dimension(1,1), 1); 
+	       spaceinvaders.deplacerMissile();
+	       spaceinvaders.tirerUnMissile(new Dimension(1,1), 1); 
+	       assertEquals("" + 
+			       "...............\n" + 
+			       "...............\n" +
+			       "...............\n" + 
+			       "...............\n" + 
+			       "...............\n" + 
+			       "........M......\n" + 
+			       "........M......\n" + 
+			       "........M......\n" + 
+			       ".....VVVVVVV...\n" + 
+			       ".....VVVVVVV...\n" , spaceinvaders.recupererEspaceJeuDansChaineASCII());
+	   }
+	   
+	   
+	   
+	   
 
 }
