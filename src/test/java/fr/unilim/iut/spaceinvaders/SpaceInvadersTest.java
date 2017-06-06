@@ -1,5 +1,6 @@
     package fr.unilim.iut.spaceinvaders;
-    import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -10,11 +11,12 @@ import fr.unilim.iut.spaceinvaders.utils.MissileException;
 
     public class SpaceInvadersTest {
     	SpaceInvaders spaceinvaders;
+    	
     	@Before
 	    public void initialisation() {
 		    spaceinvaders = new SpaceInvaders(15, 10);
 	    }
-	
+   
 	   @Test
 	   public void test_AuDebut_JeuSpaceInvaderEstVide() {
 		    assertEquals("" + 
@@ -245,7 +247,7 @@ import fr.unilim.iut.spaceinvaders.utils.MissileException;
 		   spaceinvaders.positionnerUnNouveauVaisseau(new Dimension(7,2),new Position(5,9), 1);
 		   spaceinvaders.tirerUnMissile(new Dimension(7,9),1);
 		}
-	   /*@Test
+	   @Test
 	    public void test_MissileAvanceAutomatiquement_ApresTirDepuisLeVaisseau() {
 
 		   spaceinvaders.positionnerUnNouveauVaisseau(new Dimension(7,2),new Position(5,9), 2);
@@ -264,7 +266,7 @@ import fr.unilim.iut.spaceinvaders.utils.MissileException;
 	       "...............\n" + 
 	       ".....VVVVVVV...\n" + 
 	       ".....VVVVVVV...\n" , spaceinvaders.recupererEspaceJeuDansChaineASCII());
-	   }*/
+	   }
 	   @Test
 	   public void test_MissileDisparait_QuandIlCommenceASortirDeEspaceJeu() {
 		   
@@ -273,7 +275,6 @@ import fr.unilim.iut.spaceinvaders.utils.MissileException;
 		   for (int i = 1; i <=6 ; i++) {
 			   spaceinvaders.deplacerMissile();
 		   }
-		   
 		   spaceinvaders.deplacerMissile();
 		   
 	       assertEquals("" +
@@ -474,4 +475,115 @@ import fr.unilim.iut.spaceinvaders.utils.MissileException;
 	       "............XXX\n" + 
 	       "............XXX\n" , spaceinvaders.recupererEspaceJeuDansChaineASCII());
 	    }
+	   
+	   @Test
+	   public void test_MissileNeTouchePasEnvahisseur(){
+		   spaceinvaders.positionnerUnNouveauVaisseau(new Dimension(7,2),new Position(5,9), 1);
+		   spaceinvaders.tirerUnMissile(new Dimension(3,2),1);
+		   spaceinvaders.positionnerUnNouveauEnvahisseur(new Dimension(3,2),new Position(1,1),3);
+		   for (int i = 1; i <=6 ; i++) {
+			   spaceinvaders.deplacerMissile();
+		   }
+		   spaceinvaders.deplacerMissile();
+		   assertEquals("" + 
+			       ".XXX...........\n" + 
+			       ".XXX...........\n" +
+			       "...............\n" + 
+			       "...............\n" + 
+			       "...............\n" + 
+			       "...............\n" + 
+			       "...............\n" + 
+			       "...............\n" + 
+			       ".....VVVVVVV...\n" + 
+			       ".....VVVVVVV...\n" , spaceinvaders.recupererEspaceJeuDansChaineASCII());
+	   }
+
+	   @Test
+	   public void test_MissileToucheEnvahisseurDevant(){
+		   spaceinvaders.positionnerUnNouveauVaisseau(new Dimension(7,2),new Position(5,9), 1);
+		   spaceinvaders.tirerUnMissile(new Dimension(3,2),1);
+		   spaceinvaders.positionnerUnNouveauEnvahisseur(new Dimension(3,2),new Position(6,1),3);
+		   for (int i = 1; i <=5 ; i++) {
+			
+			   spaceinvaders.deplacerMissile();
+			   
+		   }
+		   assertEquals("" + 
+			       "...............\n" + 
+			       "...............\n" +
+			       "...............\n" + 
+			       "...............\n" + 
+			       "...............\n" + 
+			       "...............\n" + 
+			       "...............\n" + 
+			       "...............\n" + 
+			       ".....VVVVVVV...\n" + 
+			       ".....VVVVVVV...\n" , spaceinvaders.recupererEspaceJeuDansChaineASCII());
+		  
+	   }
+
+	   @Test
+	   public void test_MissileToucheEnvahisseurADroiteEnvahisseur(){
+		   spaceinvaders.positionnerUnNouveauVaisseau(new Dimension(7,2),new Position(5,9), 1);
+		   spaceinvaders.tirerUnMissile(new Dimension(3,2),1);
+		   spaceinvaders.positionnerUnNouveauEnvahisseur(new Dimension(3,2),new Position(4,1),3);
+		   for (int i = 1; i <=5 ; i++) {
+			   spaceinvaders.deplacerMissile();
+		   }
+		   spaceinvaders.deplacerEnvahisseurVersLaDroite();
+		   assertEquals("" + 
+			       "...............\n" + 
+			       "...............\n" +
+			       "...............\n" + 
+			       "...............\n" + 
+			       "...............\n" + 
+			       "...............\n" + 
+			       "...............\n" + 
+			       "...............\n" + 
+			       ".....VVVVVVV...\n" + 
+			       ".....VVVVVVV...\n" , spaceinvaders.recupererEspaceJeuDansChaineASCII());
+	   }
+	   @Test
+	   public void test_MissileToucheEnvahisseurAGaucheEnvahisseur(){
+		   spaceinvaders.positionnerUnNouveauVaisseau(new Dimension(7,2),new Position(5,9), 1);
+		   spaceinvaders.tirerUnMissile(new Dimension(3,2),1);
+		   spaceinvaders.positionnerUnNouveauEnvahisseur(new Dimension(3,2),new Position(10,1),3);
+		   for (int i = 1; i <=5 ; i++) {
+			   spaceinvaders.deplacerMissile();
+		   }
+		   spaceinvaders.deplacerEnvahisseurVersLaGauche();
+		  
+		   assertEquals("" + 
+			       "...............\n" + 
+			       "...............\n" +
+			       "...............\n" + 
+			       "...............\n" + 
+			       "...............\n" + 
+			       "...............\n" + 
+			       "...............\n" + 
+			       "...............\n" + 
+			       ".....VVVVVVV...\n" + 
+			       ".....VVVVVVV...\n" , spaceinvaders.recupererEspaceJeuDansChaineASCII());
+	   }
+	   @Test
+	   public void test_LeJeuSeFiniQuandIlNyAPlusDenvahisseurAprèsUnDeplacementDeMissile(){
+		   spaceinvaders.positionnerUnNouveauVaisseau(new Dimension(7,2),new Position(5,9), 1);
+		   spaceinvaders.tirerUnMissile(new Dimension(3,2),1);
+		   spaceinvaders.positionnerUnNouveauEnvahisseur(new Dimension(3,2),new Position(9,1),3);
+		   for (int i = 1; i <=5 ; i++) {
+			   spaceinvaders.deplacerMissile();
+		   }
+	       
+	       assertEquals(true , spaceinvaders.etreFini());
+	   }
+	   @Test
+	   public void test_LeJeuSeFiniLhorsDuneCollisionQuandLeMissileEstTiréAuCorpsACorps() {
+		   
+		   spaceinvaders.positionnerUnNouveauEnvahisseur(new Dimension(4,2),new Position(11,7),3);
+		  
+	       spaceinvaders.positionnerUnNouveauVaisseau(new Dimension(3,2), new Position(12,9), 3);
+	       spaceinvaders.tirerUnMissile(new Dimension(1,1), 2);
+	       assertEquals(true,spaceinvaders.etreFini());
+	   }
+
 }

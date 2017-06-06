@@ -51,10 +51,14 @@ public abstract class Sprite {
 	
 	public void deplacerHorizontalementVers(Direction direction) {
 		if(direction.valeur()==-1 && this.origine.abscisse() >0){
-			this.origine.changerAbscisse((this.origine.abscisse() + direction.valeur()*vitesse));
+			for(int j =0 ; j<this.vitesse; j++){
+			this.origine.changerAbscisse((this.origine.abscisse() - 1));
+			}
 		}
 		if(direction.valeur()== 1 && this.origine.abscisse() < Constante.ESPACEJEU_LONGUEUR- this.dimension.longueur){
-			this.origine.changerAbscisse(this.origine.abscisse() + direction.valeur()*vitesse);
+			for(int g =0; g<this.vitesse; g++){
+			this.origine.changerAbscisse(this.origine.abscisse() + 1);
+			}
 		}
 		
 	}
@@ -64,6 +68,8 @@ public abstract class Sprite {
 	}
 
 	public void deplacerVerticalementVers(Direction direction) {
-		this.origine.changerOrdonnee(this.origine.ordonnee() + direction.valeur()*vitesse);
+		for(int i =0; i<this.vitesse;i++){
+		this.origine.changerOrdonnee(this.origine.ordonnee() - 1);
+		}
 	}
 }

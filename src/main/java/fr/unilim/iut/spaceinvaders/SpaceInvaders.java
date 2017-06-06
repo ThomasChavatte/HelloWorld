@@ -21,8 +21,10 @@ public class SpaceInvaders implements Jeu{
 
 	    @Override
 		public boolean etreFini() {
-			// le jeu n'est jamais fini
-			return false;
+	    	if(this.envahisseur==null){
+	    		return true;
+	    	}
+	    	return false;
 		}
 	    
 	    @Override
@@ -117,7 +119,7 @@ public class SpaceInvaders implements Jeu{
 			Dimension dimensionVaisseau = new Dimension(Constante.VAISSEAU_LONGUEUR, Constante.VAISSEAU_HAUTEUR);
 			positionnerUnNouveauVaisseau(dimensionVaisseau, positionVaisseau, Constante.VAISSEAU_VITESSE);
 			
-			Position positionEnvahisseur = new Position(this.longueur/2,Constante.ENVAHISSEUR_HAUTEUR+1);
+			Position positionEnvahisseur = new Position(this.longueur/2,Constante.ENVAHISSEUR_HAUTEUR+50);
 			Dimension dimensionEnvahisseur = new Dimension(Constante.ENVAHISSEUR_LONGUEUR, Constante.ENVAHISSEUR_HAUTEUR);
 			positionnerUnNouveauEnvahisseur(dimensionEnvahisseur, positionEnvahisseur, Constante.ENVAHISSEUR_VITESSE);
 			
@@ -170,6 +172,8 @@ public class SpaceInvaders implements Jeu{
 				   throw new MissileException("Pas assez de hauteur libre entre le vaisseau et le haut de l'espace jeu pour tirer le missile");
 								
 			   this.missile = this.vaisseau.tirerUnMissile(dimensionMissile,vitesseMissile);
+			   detecterCollision(this.missile, this.envahisseur);
+			
 	       }
 
 		public Missile recupererMissile() {
@@ -177,10 +181,12 @@ public class SpaceInvaders implements Jeu{
 			return this.missile;
 		}
 
-		public void deplacerMissile() {
+		public void deplacerMissile(){
 			
 			if(missile.ordonneeLaPlusBasse()>0){
-			missile.deplacerVerticalementVers(Direction.HAUT_ECRAN);
+				detecterCollision(this.missile,this.envahisseur);
+				missile.deplacerVerticalementVers(Direction.HAUT_ECRAN);
+				detecterCollision(this.missile,this.envahisseur);
 			}
 			else{
 				this.missile=null;
@@ -190,6 +196,20 @@ public class SpaceInvaders implements Jeu{
 		
 		
 		//////////////////////////////////////////////////////////
+
+		public void detecterCollision(Sprite missile, Sprite envahisseur){
+			// TODO Auto-generated method stub
+			
+			if(this.aUnEnvahisseur() && this.aUnMissile()){
+				if(this.missile.ordonneeLaPlusBasse()<=envahisseur.ordonneeLaPlusHaute() && this.missile.ordonneeLaPlusBasse()>=envahisseur.ordonneeLaPlusBasse() || this.missile.ordonneeLaPlusHaute()<=envahisseur.ordonneeLaPlusHaute() && this.missile.ordonneeLaPlusHaute()>=envahisseur.ordonneeLaPlusBasse()){
+			
+					if(this.missile.abscisseLaPlusADroite()<=this.envahisseur.abscisseLaPlusADroite() && this.missile.abscisseLaPlusADroite()>=this.envahisseur.abscisseLaPlusAGauche() || this.missile.abscisseLaPlusAGauche()<=this.envahisseur.abscisseLaPlusADroite() && this.missile.abscisseLaPlusAGauche()>=this.envahisseur.abscisseLaPlusAGauche() ){
+					this.envahisseur=null;
+					this.missile=null;
+				}
+			}
+			}
+		}
 
 		public void positionnerUnNouveauEnvahisseur(Dimension dimension, Position position, int vitesse) {
 			// TODO Auto-generated method stub
@@ -217,7 +237,7 @@ public class SpaceInvaders implements Jeu{
 
 		public boolean aUnEnvahisseur() {
 			// TODO Auto-generated method stub
-			return envahisseur!=null;
+			return this.envahisseur!=null;
 		}
 
 		public Envahisseur recupererEnvahisseur() {
@@ -231,7 +251,8 @@ public class SpaceInvaders implements Jeu{
 				envahisseur.deplacerHorizontalementVers(Direction.GAUCHE);
 			if (!estDansEspaceJeu(envahisseur.abscisseLaPlusAGauche(), envahisseur.ordonneeLaPlusHaute())) {
 				envahisseur.positionner(0, envahisseur.ordonneeLaPlusHaute());
-			}			
+			}	
+			detecterCollision(this.missile,this.envahisseur);
 		}
 
 		public void deplacerEnvahisseurVersLaDroite() {
@@ -242,6 +263,7 @@ public class SpaceInvaders implements Jeu{
 					envahisseur.positionner(longueur - envahisseur.longueur(), envahisseur.ordonneeLaPlusHaute());
 				}
 			}
+			detecterCollision(this.missile, this.envahisseur);
 		}
 		
 		private void deplacerEnvahisseur() {
@@ -264,8 +286,7 @@ public class SpaceInvaders implements Jeu{
 				else{
 					this.deplacerEnvahisseurVersLaGauche();
 				}				
-			}
-			
+			}			
 		}
 
 }
