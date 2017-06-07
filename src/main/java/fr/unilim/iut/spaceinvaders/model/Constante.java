@@ -2,7 +2,7 @@ package fr.unilim.iut.spaceinvaders.model;
 
 public class Constante {
 
-	   public static final int ESPACEJEU_LONGUEUR = 300;
+	   public static final int ESPACEJEU_LONGUEUR = 400;
 	   public static final int ESPACEJEU_HAUTEUR = 500;
 	
 	   public static final int VAISSEAU_LONGUEUR = 30;
@@ -20,7 +20,7 @@ public class Constante {
 	   
 	   
 	   public static final char MARQUE_ENVAHISSEUR = 'X';
-	public static final int ENVAHISSEUR_LONGUEUR = 30;
+	public static final int ENVAHISSEUR_LONGUEUR = 60;
 	public static final int ENVAHISSEUR_HAUTEUR = 20;
 	public static final int ENVAHISSEUR_VITESSE = 8;
 }

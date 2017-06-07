@@ -240,10 +240,10 @@ public class SpaceInvaders implements Jeu {
 	}
 
 	public boolean missileEstDansIntervalleOrdonneVaisseau(Sprite envahisseur, int i) {
-		return this.missile.get(i).ordonneeLaPlusBasse() <= envahisseur.ordonneeLaPlusHaute()
-				&& this.missile.get(i).ordonneeLaPlusBasse() >= envahisseur.ordonneeLaPlusBasse()
-				|| this.missile.get(i).ordonneeLaPlusHaute() <= envahisseur.ordonneeLaPlusHaute()
-						&& this.missile.get(i).ordonneeLaPlusHaute() >= envahisseur.ordonneeLaPlusBasse();
+		return (this.missile.get(i).ordonneeLaPlusBasse() <= envahisseur.ordonneeLaPlusHaute()
+				&& this.missile.get(i).ordonneeLaPlusBasse() >= envahisseur.ordonneeLaPlusBasse())
+				|| (this.missile.get(i).ordonneeLaPlusHaute() <= envahisseur.ordonneeLaPlusHaute()
+						&& this.missile.get(i).ordonneeLaPlusHaute() >= envahisseur.ordonneeLaPlusBasse());
 	}
 
 	public void positionnerUnNouveauEnvahisseur(Dimension dimension, Position position, int vitesse) {

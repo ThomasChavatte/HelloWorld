@@ -375,7 +375,7 @@ import fr.unilim.iut.spaceinvaders.utils.MissileException;
 
 	       spaceinvaders.positionnerUnNouveauEnvahisseur(new Dimension(3,2),new Position(7,9), 3);
 	       spaceinvaders.deplacerEnvahisseurVersLaGauche();
-
+	       
 	       assertEquals("" + 
 	       "...............\n" + 
 	       "...............\n" +
@@ -681,7 +681,7 @@ import fr.unilim.iut.spaceinvaders.utils.MissileException;
 	   }
 	   
 	   @Test
-	   public void test_TousLesMissilesDisparaissentQuandPartieFini() {
+	   public void test_TousLesMissilesNeDisparaissentPasQuandPartieFini() {
 	       spaceinvaders.positionnerUnNouveauVaisseau(new Dimension(7,2), new Position(5,9), 3);
 	       spaceinvaders.positionnerUnNouveauEnvahisseur(new Dimension(3,2),new Position(7,3),3);
 	       spaceinvaders.tirerUnMissile(new Dimension(1,1), 1);
